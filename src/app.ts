@@ -2,13 +2,15 @@ import cors from "cors";
 import "dotenv/config";
 import express from "express";
 import "express-async-errors";
-import { router } from "./api/routes";
 import { handleError } from "./api/middlewares/HandleError";
+import { router } from "./api/routes";
+import { db } from "./database/sequelize";
 
 export class App {
   public express: express.Application;
 
   private middleware() {
+    db.sync({ alter: true });
     this.express.use(cors());
     this.express.use(express.json());
   }
